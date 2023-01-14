@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Watch</title>
+    <style>
+        .container{
+            width: 500px;
+            height: 200px;
+            margin: auto;
+            margin-top: 100px;
+            background-color: #37383a;
+            border-radius: 20px;
+        }
+
+        .container > :first-child{
+            display:  flex;
+            width: 100%;
+            height: 60%;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .container > :last-child{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10%;
+        }
+
+        button{
+            background-color: red;
+            color: white;
+            font-size:  20px;
+            margin: 20px;
+            border-radius: 5px;
+            border-color: red;
+            padding: 5px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        #hrs, #min, #sec{
+            margin: 5px;
+        }
+        
+        img{
+            width: 50px;
+        }
+        h1{
+            text-align: center;
+            font-size: 60px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stop Watch <img src="https://cdn-icons-png.flaticon.com/512/2/2086.png"></h1>
+    <div class="container">
+        <div>
+            <div id="hrs"></div>
+            <div id="min"></div>
+            <div id="sec">0s</div>
+        </div>
+
+        <div>
+            <button id="start">Start</button>
+            <button id="pause">Pause</button>
+            <button id="reset">Reset</button>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    let second = 0;
+    let interval = null;
+    let start_but = document.querySelector('#start');
+    let pause_but = document.querySelector('#pause');
+    let reset_but = document.querySelector('#reset');
+
+    start_but.addEventListener('click', start);
+    pause_but.addEventListener('click', pause);
+    reset_but.addEventListener('click', reset);
+
+    function timer(){
+        second++;
+
+        let hours = Math.floor(second / 3600);
+        let minutes = Math.floor((second - (hours*3600)) / 60);
+        let seconds = second % 60;
+
+        document.querySelector('#sec').innerText = seconds + 's';
+        if(minutes > 0) document.querySelector('#min').innerText = minutes + 'm';
+        if(hours > 0 ) document.querySelector('#hrs').innerText = hours + 'h';
+    }
+
+    function start(){
+        if(interval) return
+        interval = setInterval(timer, 1000);
+    }
+
+    function pause(){
+        clearInterval(interval);
+        interval = null;
+    }
+
+    function reset(){
+        pause();
+        second = 0;
+        document.querySelector('#hrs').innerText = "";
+        document.querySelector('#min').innerText = "";
+        document.querySelector('#sec').innerText = "0s";
+    }
+
+</script>
